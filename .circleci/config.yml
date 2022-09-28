@@ -151,22 +151,15 @@ workflows:
       - e2e:
           filters:
             <<: *release_filter
-      - approve:
-          filters:
-            <<: *release_filter
-          type: approval
-          requires:
-            - test
-            - build
-            - e2e
       - release:
           filters:
             <<: *release_filter
           requires:
-            - approve
+            - test
+            - build
+            - e2e
       - upload_to_sentry:
           filters:
             <<: *release_filter
           requires:
-            - approve
             - release
